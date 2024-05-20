@@ -1,13 +1,23 @@
 import { useState } from "react";
-import { Product } from "../types";
+import { BaseProduct, Product } from "../types";
 import EditProductForm from "./EditProductForm";
 import ProductDetails from "./ProductDetails";
 
 interface EditableProductProps {
   product: Product;
+  onUpdateProduct: (
+    updatedProduct: BaseProduct,
+    productId: string,
+    onToggleEdit: () => void
+  ) => void;
+  onDeleteProduct: (productId: string) => void;
 }
 
-const EditableProduct = ({ product }: EditableProductProps) => {
+const EditableProduct = ({
+  product,
+  onUpdateProduct,
+  onDeleteProduct,
+}: EditableProductProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const handleToggleEdit = () => {
@@ -16,9 +26,17 @@ const EditableProduct = ({ product }: EditableProductProps) => {
 
   return (
     <li className="product">
-      <ProductDetails {...product} onToggleEdit={handleToggleEdit} />
+      <ProductDetails
+        {...product}
+        onToggleEdit={handleToggleEdit}
+        onDeleteProduct={onDeleteProduct}
+      />
       {isEditing ? (
-        <EditProductForm {...product} onToggleEdit={handleToggleEdit} />
+        <EditProductForm
+          {...product}
+          onToggleEdit={handleToggleEdit}
+          onUpdateProduct={onUpdateProduct}
+        />
       ) : null}
     </li>
   );

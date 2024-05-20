@@ -1,10 +1,38 @@
-import { Product } from "../types";
+import { useState } from "react";
+import { BaseProduct, Product } from "../types";
 
 interface EditProductFormProps extends Product {
   onToggleEdit: () => void;
+  onUpdateProduct: (
+    updatedProduct: BaseProduct,
+    productId: string,
+    onToggleEdit: () => void
+  ) => void;
 }
 
-const EditProductForm = ({ onToggleEdit }: EditProductFormProps) => {
+const EditProductForm = ({
+  _id,
+  title: propTitle,
+  price: propPrice,
+  quantity: propQuantity,
+  onToggleEdit,
+  onUpdateProduct,
+}: EditProductFormProps) => {
+  const [title, setTitle] = useState(propTitle || "");
+  const [price, setPrice] = useState(propPrice || 0);
+  const [quantity, setQuantity] = useState(propQuantity || 0);
+
+  const handleSubmit = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    const updatedProduct = {
+      title,
+      price,
+      quantity,
+    };
+
+    onUpdateProduct(updatedProduct, _id, onToggleEdit);
+  };
+
   return (
     <div className="edit-form">
       <h3>Edit Product</h3>
@@ -14,7 +42,8 @@ const EditProductForm = ({ onToggleEdit }: EditProductFormProps) => {
           <input
             type="text"
             id="product-name"
-            value="Apple 10.5-Inch iPad Pro"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             aria-label="Product Name"
           />
         </div>
@@ -24,8 +53,9 @@ const EditProductForm = ({ onToggleEdit }: EditProductFormProps) => {
           <input
             type="number"
             id="product-price"
-            value="649.99"
+            value={price}
             aria-label="Product Price"
+            onChange={(e) => setPrice(+e.target.value)}
           />
         </div>
 
@@ -34,13 +64,16 @@ const EditProductForm = ({ onToggleEdit }: EditProductFormProps) => {
           <input
             type="number"
             id="product-quantity"
-            value="2"
+            value={quantity}
             aria-label="Product Quantity"
+            onChange={(e) => setQuantity(+e.target.value)}
           />
         </div>
 
         <div className="actions form-actions">
-          <button type="submit">Update</button>
+          <button type="submit" onClick={handleSubmit}>
+            Update
+          </button>
           <button type="button" onClick={onToggleEdit}>
             Cancel
           </button>

@@ -2,14 +2,20 @@ import { Product } from "../types";
 
 interface ProductDetailsProps extends Product {
   onToggleEdit: () => void;
+  onDeleteProduct: (productId: string) => void;
 }
 
 const ProductDetails = ({
+  _id,
   title,
   price,
   quantity,
   onToggleEdit,
+  onDeleteProduct,
 }: ProductDetailsProps) => {
+  const handleDelete = () => {
+    onDeleteProduct(_id);
+  };
   return (
     <div className="product-details">
       <h3>{title}</h3>
@@ -21,7 +27,7 @@ const ProductDetails = ({
           Edit
         </button>
       </div>
-      <button className="delete-button">
+      <button className="delete-button" onClick={handleDelete}>
         <span>X</span>
       </button>
     </div>
