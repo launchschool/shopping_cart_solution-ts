@@ -1,11 +1,18 @@
+import { Product } from "../types";
 import EditableProduct from "./EditableProduct";
 
-const ProductListing = () => {
+interface ProductListingProps {
+  products: Product[];
+}
+
+const ProductListing = ({ products }: ProductListingProps) => {
   return (
     <div className="product-listing">
       <h2>Products</h2>
       <ul className="product-list">
-        <EditableProduct />
+        {products.map((product) => (
+          <EditableProduct key={product._id} product={product} />
+        ))}
 
         <li className="product">
           <div className="product-details">

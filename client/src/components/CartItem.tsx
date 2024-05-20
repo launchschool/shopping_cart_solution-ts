@@ -1,9 +1,13 @@
-const CartItem = () => {
+import { CartItem as CartItemType } from "../types";
+
+interface CartItemProps extends CartItemType {}
+
+const CartItem = ({ title, quantity, price }: CartItemProps) => {
   return (
     <tr>
-      <td>Apple 10.5-Inch iPad Pro</td>
-      <td>1</td>
-      <td>$649.99</td>
+      <td>{title}</td>
+      <td>{quantity}</td>
+      <td>${price}</td>
     </tr>
   );
 };

@@ -1,6 +1,11 @@
 import CartItem from "./CartItem";
+import { CartItem as CartItemType } from "../types";
 
-const CartItems = () => {
+interface CartItemProps {
+  cartItems: CartItemType[];
+}
+
+const CartItems = ({ cartItems }: CartItemProps) => {
   return (
     <table className="cart-items">
       <thead>
@@ -11,7 +16,9 @@ const CartItems = () => {
         </tr>
       </thead>
       <tbody>
-        <CartItem />
+        {cartItems.map((cartItem) => (
+          <CartItem key={cartItem._id} {...cartItem} />
+        ))}
       </tbody>
       <tfoot>
         <tr>

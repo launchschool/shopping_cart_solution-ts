@@ -1,10 +1,10 @@
-const AddProductForm = () => {
+interface AddProductFormProps {
+  onToggleForm: () => void;
+}
+
+const AddProductForm = ({ onToggleForm }: AddProductFormProps) => {
   return (
     <div className="add-form">
-      <p>
-        <button className="add-product-button">Add A Product</button>
-      </p>
-      <h3>Add Product</h3>
       <form>
         <div className="input-group">
           <label htmlFor="product-name">Product Name:</label>
@@ -33,7 +33,9 @@ const AddProductForm = () => {
         </div>
         <div className="actions form-actions">
           <button type="submit">Add</button>
-          <button type="button">Cancel</button>
+          <button type="button" onClick={onToggleForm}>
+            Cancel
+          </button>
         </div>
       </form>
     </div>
