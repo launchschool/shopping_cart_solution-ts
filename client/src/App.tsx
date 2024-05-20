@@ -12,7 +12,7 @@ function App() {
   useEffect(() => {
     setProducts(mockProducts);
     setCartItems(mockCart);
-  });
+  }, []);
 
   return (
     <div id="app">
