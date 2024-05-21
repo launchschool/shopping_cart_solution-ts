@@ -26,8 +26,12 @@ function App() {
       const data = await getCartItems();
       setCartItems(data);
     };
-    fetchProducts();
-    fetchCartItems();
+    try {
+      fetchProducts();
+      fetchCartItems();
+    } catch (e) {
+      console.error(e);
+    }
   }, []);
 
   const handleUpdateProduct = async (
@@ -81,8 +85,12 @@ function App() {
   };
 
   const handleCheckout = async () => {
-    await checkout();
-    setCartItems([]);
+    try {
+      await checkout();
+      setCartItems([]);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const handleAddToCart = async (productId: string) => {
@@ -116,7 +124,7 @@ function App() {
         }
       });
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 

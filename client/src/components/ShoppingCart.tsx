@@ -7,8 +7,6 @@ interface ShoppingCartProps {
 }
 
 const ShoppingCart = ({ cartItems, onCheckout }: ShoppingCartProps) => {
-  console.log(cartItems);
-
   return (
     <header>
       <h1>The Shop!</h1>
