@@ -3,27 +3,34 @@ import CartItems from "./CartItems";
 
 interface ShoppingCartProps {
   cartItems: CartItem[];
+  onCheckout: () => void;
 }
 
-const ShoppingCart = ({ cartItems }: ShoppingCartProps) => {
-  const cart: number = 2;
+const ShoppingCart = ({ cartItems, onCheckout }: ShoppingCartProps) => {
+  console.log(cartItems);
+
   return (
     <header>
       <h1>The Shop!</h1>
       <div className="cart">
         <h2>Your Cart</h2>
-        {cart === 0 ? (
+        {cartItems.length === 0 ? (
           <div className="cart">
-            <h2>Your Cart</h2>
             <p>Your cart is empty</p>
             <p>Total: $0</p>
-            <button className="checkout" disabled>
-              Checkout
-            </button>
           </div>
         ) : (
           <CartItems cartItems={cartItems} />
         )}
+        <div className="checkout-button">
+          <button
+            className="checkout"
+            disabled={cartItems.length === 0}
+            onClick={onCheckout}
+          >
+            Checkout
+          </button>
+        </div>
       </div>
     </header>
   );

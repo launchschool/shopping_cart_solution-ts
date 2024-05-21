@@ -9,6 +9,8 @@ import {
   updateProduct,
   addProduct,
   deleteProduct,
+  checkout,
+  addToCart,
 } from "./services/products";
 
 function App() {
@@ -36,11 +38,11 @@ function App() {
     try {
       const data = await updateProduct(updatedProduct, productId);
       setProducts((prevState) => {
-        return prevState.map((comment) => {
-          if (comment._id === data._id) {
+        return prevState.map((product) => {
+          if (product._id === data._id) {
             return data;
           } else {
-            return comment;
+            return product;
           }
         });
       });
@@ -58,7 +60,6 @@ function App() {
   ) => {
     try {
       const data = await addProduct(newProduct);
-      console.log("herhehrer", data);
       setProducts((prevState) => prevState.concat(data));
       if (callback) {
         callback();
@@ -79,11 +80,52 @@ function App() {
     }
   };
 
+  const handleCheckout = async () => {
+    await checkout();
+    setCartItems([]);
+  };
+
+  const handleAddToCart = async (productId: string) => {
+    const product = products.find((product) => product._id === productId);
+    const existingItem = cartItems.find(
+      (cartItem) => cartItem.productId === productId
+    );
+    if (!product || product.quantity === 0) return;
+    try {
+      const { product: updatedProduct, item } = await addToCart(productId);
+      setProducts((prevState) => {
+        return prevState.map((product) => {
+          if (product._id === updatedProduct._id) {
+            return updatedProduct;
+          } else {
+            return product;
+          }
+        });
+      });
+      setCartItems((prevState) => {
+        if (existingItem) {
+          return prevState.map((cartItem) => {
+            if (cartItem.productId === productId) {
+              return item;
+            } else {
+              return cartItem;
+            }
+          });
+        } else {
+          return prevState.concat(item);
+        }
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <div id="app">
-      <ShoppingCart cartItems={cartItems} />
+      <ShoppingCart cartItems={cartItems} onCheckout={handleCheckout} />
       <main>
         <ProductListing
+          onAddToCart={handleAddToCart}
           products={products}
           onUpdateProduct={handleUpdateProduct}
           onDeleteProduct={handleDeleteProduct}

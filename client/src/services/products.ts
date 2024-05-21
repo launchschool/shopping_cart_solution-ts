@@ -30,3 +30,13 @@ export const deleteProduct = async (productId: string) => {
   const { data } = await axios.delete(`/api/products/${productId}`);
   return data;
 };
+
+export const checkout = async () => {
+  const { data } = await axios.post("/api/checkout");
+  return data;
+};
+
+export const addToCart = async (productId: string) => {
+  const { data } = await axios.post(`/api/add-to-cart`, { productId });
+  return data;
+};

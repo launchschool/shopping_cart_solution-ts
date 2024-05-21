@@ -11,12 +11,14 @@ interface EditableProductProps {
     onToggleEdit: () => void
   ) => void;
   onDeleteProduct: (productId: string) => void;
+  onAddToCart: (productId: string) => void;
 }
 
 const EditableProduct = ({
   product,
   onUpdateProduct,
   onDeleteProduct,
+  onAddToCart,
 }: EditableProductProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
@@ -30,6 +32,7 @@ const EditableProduct = ({
         {...product}
         onToggleEdit={handleToggleEdit}
         onDeleteProduct={onDeleteProduct}
+        onAddToCart={onAddToCart}
       />
       {isEditing ? (
         <EditProductForm
