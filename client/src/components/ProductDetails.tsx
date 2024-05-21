@@ -25,17 +25,26 @@ const ProductDetails = ({
       <p className="quantity">{quantity} left in stock</p>
       <div className="actions product-actions">
         <button
+          data-testid={`add-to-cart-${_id}`}
           className="add-to-cart"
           disabled={quantity === 0}
           onClick={() => onAddToCart(_id)}
         >
           Add to Cart
         </button>
-        <button className="edit" onClick={onToggleEdit}>
+        <button
+          data-testid={`edit-${_id}`}
+          className="edit"
+          onClick={onToggleEdit}
+        >
           Edit
         </button>
       </div>
-      <button className="delete-button" onClick={handleDelete}>
+      <button
+        data-testid={`delete-${_id}`}
+        className="delete-button"
+        onClick={handleDelete}
+      >
         <span>X</span>
       </button>
     </div>
