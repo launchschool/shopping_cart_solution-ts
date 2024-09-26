@@ -8,7 +8,7 @@ export interface Product {
   _v?: number;
 }
 
-export type NewProduct = Omit<Product, "_id">;
+export type BaseProduct = Omit<Product, "_id">;
 
 export interface CartItem extends Product {
   productId: string;
